@@ -1,0 +1,419 @@
+{
+  "spaceShips": [
+    {
+      "name": "Player",
+      "isPlayer": true,
+      "textureName": "Player",
+      "maxHealth": 200,
+      "hitboxHalfSize": [ 40, 50 ],
+      "animationComponent": {
+        "frames": 7,
+        "framesColumns": 7,
+        "framesRows": 3,
+        "animationSpeed": 9.0
+      },
+      "shootingComponent": [
+        {
+          "bulletName": "PlayerLaser",
+          "shootInterval": 0.18,
+          "shootPosOffsetY": -50.0,
+          "mode": "manual",
+          "key": 57,
+          "movementComponent": {
+            "startSpeed": 400,
+            "maxSpeed": 1500,
+            "accelerationSpeed": 1500,
+            "direction": [ 0, -1 ]
+          }
+        },
+        {
+          "bulletName": "PlayerRocket",
+          "shootInterval": 5.0,
+          "shootPosOffsetX": 33.0,
+          "shootPosOffsetY": 30.0,
+          "mode": "manual",
+          "key": 37,
+          "movementComponent": {
+            "startSpeed": 0,
+            "maxSpeed": 5000,
+            "accelerationSpeed": 2500,
+            "direction": [ 0, -1 ]
+          }
+        },
+        {
+          "bulletName": "PlayerRocket",
+          "shootInterval": 5.0,
+          "shootPosOffsetX": -33.0,
+          "shootPosOffsetY": 30.0,
+          "mode": "manual",
+          "key": 37,
+          "movementComponent": {
+            "startSpeed": 0,
+            "maxSpeed": 5000,
+            "accelerationSpeed": 2500,
+            "direction": [ 0, -1 ]
+          }
+        }
+      ],
+      "effectComponent": {
+        "onDeploy": [
+          {
+            "effect": "PlayerThrust",
+            "effectPosOffsetY": 95.0,
+            "pinToParent": true,
+            "loopAnimation": true,
+            "sounds": [ "GameStart" ]
+          }
+        ],
+        "onDeath": [
+          {
+            "effect": "Explosion_3",
+            "sounds": [ "Explosion_1", "Explosion_2", "Explosion_3" ]
+          }
+        ],
+        "onShoot": [
+          {
+            "effect": "PlayerFlare",
+            "effectPosOffsetY": -50.0,
+            "pinToParent": true,
+            "sounds": [ "PlayerFire" ]
+          },
+          {
+            "sounds": [ "PlayerRocket" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpikeyEnemy",
+      "isPlayer": false,
+      "textureName": "SpikeyEnemy",
+      "maxHealth": 30,
+      "spawnInterval": 7.6,
+      "hitboxHalfSize": [ 16, 16 ],
+      "animationComponent": {
+        "frames": 16,
+        "framesColumns": 4,
+        "framesRows": 4,
+        "animationSpeed": 9.0
+      },
+      "movementComponent": {
+        "followEnemy": true,
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ]
+      },
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_2",
+            "sounds": [ "Explosion_4" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "BladeEnemy",
+      "isPlayer": false,
+      "textureName": "BladeEnemy",
+      "maxHealth": 50,
+      "spawnInterval": 14.8,
+      "hitboxHalfSize": [ 25, 25 ],
+      "animationComponent": {
+        "frames": 4,
+        "framesColumns": 2,
+        "framesRows": 2,
+        "animationSpeed": 9.0
+      },
+      "movementComponent": {
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ]
+      },
+      "shootingComponent": [
+        {
+          "bulletName": "EnemyBullet",
+          "shootInterval": 2.0,
+          "mode": "auto",
+          "movementComponent": {
+            "aimEnemy": true,
+            "maxSpeed": 300,
+            "direction": [ 0, 1 ]
+          }
+        }
+      ],
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_1",
+            "sounds": [ "Explosion_1", "Explosion_2", "Explosion_3" ]
+          }
+        ],
+        "onShoot": [
+          {
+            "sounds": [ "Laser_1" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "BugEnemy",
+      "isPlayer": false,
+      "textureName": "BugEnemy",
+      "maxHealth": 70,
+      "spawnInterval": 10.3,
+      "hitboxHalfSize": [ 20, 30 ],
+      "animationComponent": {
+        "frames": 16,
+        "framesColumns": 4,
+        "framesRows": 4,
+        "animationSpeed": 9.0
+      },
+      "movementComponent": {
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ]
+      },
+      "shootingComponent": [
+        {
+          "bulletName": "EnemyLaser",
+          "shootInterval": 0.25,
+          "queueInterval": 3.0,
+          "queueSize": 3,
+          "shootPosOffsetY": 40.0,
+          "mode": "auto",
+          "movementComponent": {
+            "maxSpeed": 300,
+            "direction": [ 0, 1 ]
+          }
+        }
+      ],
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_1",
+            "sounds": [ "Explosion_1", "Explosion_2", "Explosion_3" ]
+          }
+        ],
+        "onShoot": [
+          {
+            "sounds": [ "Laser_1" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "FighterEnemy",
+      "isPlayer": false,
+      "textureName": "FighterEnemy",
+      "maxHealth": 100,
+      "spawnInterval": 19.3,
+      "hitboxHalfSize": [ 40, 40 ],
+      "animationComponent": {
+        "frames": 16,
+        "framesColumns": 4,
+        "framesRows": 4,
+        "animationSpeed": 9.0
+      },
+      "movementComponent": {
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ],
+        "function": [
+          {
+            "variables": "x = 2.0, y = 50.0",
+            "expression": "sin(elapsed * x) * y"
+          }
+        ]
+      },
+      "shootingComponent": [
+        {
+          "bulletName": "EnemyLaser",
+          "shootInterval": 3.0,
+          "shootPosOffsetX": 45.0,
+          "shootPosOffsetY": 10.0,
+          "mode": "auto",
+          "movementComponent": {
+            "maxSpeed": 300,
+            "direction": [ 0, 1 ]
+          }
+        },
+        {
+          "bulletName": "EnemyLaser",
+          "shootInterval": 3.0,
+          "shootPosOffsetX": -45.0,
+          "shootPosOffsetY": 10.0,
+          "mode": "auto",
+          "movementComponent": {
+            "maxSpeed": 300,
+            "direction": [ 0, 1 ]
+          }
+        }
+      ],
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_3",
+            "sounds": [ "Explosion_1", "Explosion_2", "Explosion_3" ]
+          }
+        ],
+        "onShoot": [
+          {
+            "sounds": [ "Laser_2" ]
+          }
+        ]
+      }
+    }
+  ],
+  "bullets": [
+    {
+      "name": "PlayerLaser",
+      "isPlayer": true,
+      "textureName": "PlayerLaser",
+      "damageMax": 15,
+      "damageMin": 10,
+      "hitboxHalfSize": [ 5, 15 ],
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_2",
+            "sounds": [ "LaserRicochet" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerRocket",
+      "isPlayer": true,
+      "textureName": "PlayerRocket",
+      "damageMax": 150,
+      "damageMin": 100,
+      "hitboxHalfSize": [ 5, 10 ]
+    },
+    {
+      "name": "EnemyLaser",
+      "isPlayer": false,
+      "textureName": "EnemyLaser",
+      "damageMax": 14,
+      "damageMin": 7,
+      "hitboxHalfSize": [ 5, 15 ],
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_2",
+            "sounds": [ "LaserRicochet" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "EnemyBullet",
+      "isPlayer": false,
+      "textureName": "EnemyBullet",
+      "damageMax": 15,
+      "damageMin": 10,
+      "hitboxHalfSize": [ 5, 5 ],
+      "animationComponent": {
+        "frames": 16,
+        "framesColumns": 16,
+        "framesRows": 1,
+        "animationSpeed": 9.0
+      },
+      "effectComponent": {
+        "onDeath": [
+          {
+            "effect": "Explosion_2",
+            "sounds": [ "LaserRicochet" ]
+          }
+        ]
+      }
+    }
+  ],
+  "effects": [
+    {
+      "name": "Explosion_1",
+      "textureName": "Explosion_1",
+      "animationComponent": {
+        "frames": 32,
+        "framesColumns": 8,
+        "framesRows": 4,
+        "animationSpeed": 18.0
+      }
+    },
+    {
+      "name": "Explosion_2",
+      "textureName": "Explosion_2",
+      "animationComponent": {
+        "frames": 9,
+        "framesColumns": 9,
+        "framesRows": 1,
+        "animationSpeed": 18.0
+      }
+    },
+    {
+      "name": "Explosion_3",
+      "textureName": "Explosion_3",
+      "animationComponent": {
+        "frames": 64,
+        "framesColumns": 8,
+        "framesRows": 8,
+        "animationSpeed": 18.0
+      }
+    },
+    {
+      "name": "PlayerFlare",
+      "textureName": "PlayerFlare",
+      "animationComponent": {
+        "frames": 7,
+        "framesColumns": 7,
+        "animationSpeed": 35.0
+      }
+    },
+    {
+      "name": "PlayerThrust",
+      "textureName": "PlayerThrust",
+      "drawLayer": 0,
+      "animationComponent": {
+        "frames": 16,
+        "framesColumns": 16,
+        "animationSpeed": 9.0
+      },
+      "effectComponent": {
+        "onDeploy": [
+          {
+            "sounds": [ "JetLoop" ],
+            "loopSound": true
+          }
+        ]
+      }
+    }
+  ],
+  "upgrades": [
+    {
+      "name": "Heal",
+      "textureName": "Heal",
+      "hitboxHalfSize": [ 10, 10 ],
+      "spawnInterval": 60.0,
+      "command": "heal",
+      "arguments": "50 Player",
+      "movementComponent": {
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ]
+      },
+      "effectComponent": {
+        "onDeath": [
+          {
+            "sounds": [ "Upgrade" ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bomb",
+      "textureName": "Bomb",
+      "hitboxHalfSize": [ 20, 20 ],
+      "spawnInterval": 35.0,
+      "command": "bomb",
+      "movementComponent": {
+        "maxSpeed": 70,
+        "direction": [ 0, 1 ]
+      }
+    }
+  ]
+}

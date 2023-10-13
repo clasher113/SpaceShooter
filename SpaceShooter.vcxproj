@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\!Additional Depencies\fparser-master\fparser.cc" />
+    <ClCompile Include="..\!Additional Depencies\fparser-master\fpoptimizer.cc" />
+    <ClCompile Include="src\Assets.cpp" />
+    <ClCompile Include="src\audio\AudioManager.cpp" />
+    <ClCompile Include="src\entities\Bullet.cpp" />
+    <ClCompile Include="src\entities\components\AnimationComponent.cpp" />
+    <ClCompile Include="src\entities\components\ControlComponent.cpp" />
+    <ClCompile Include="src\entities\components\EffectComponent.cpp" />
+    <ClCompile Include="src\entities\components\MovementComponent.cpp" />
+    <ClCompile Include="src\entities\components\ShootingComponent.cpp" />
+    <ClCompile Include="src\entities\Effect.cpp" />
+    <ClCompile Include="src\entities\Player.cpp" />
+    <ClCompile Include="src\entities\SpaceShip.cpp" />
+    <ClCompile Include="src\entities\EntityInfo.cpp" />
+    <ClCompile Include="src\entities\Entity.cpp" />
+    <ClCompile Include="src\entities\EntitySystem.cpp" />
+    <ClCompile Include="src\EngineInitializer.cpp" />
+    <ClCompile Include="src\entities\Upgrade.cpp" />
+    <ClCompile Include="src\graphics\Layer.cpp" />
+    <ClCompile Include="src\graphics\Layers.cpp" />
+    <ClCompile Include="src\gui\ProgressBar.cpp" />
+    <ClCompile Include="src\gui\SetOrigin.cpp" />
+    <ClCompile Include="src\gui\Widget.cpp" />
+    <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\gui\Button.cpp" />
+    <ClCompile Include="src\gui\Slider.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\system\Events.cpp" />
+    <ClCompile Include="src\system\Input.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\states\GuiFactory.cpp" />
+    <ClCompile Include="src\system\Window.cpp" />
+    <ClCompile Include="src\utils\Config.cpp" />
+    <ClCompile Include="src\states\Game.cpp" />
+    <ClCompile Include="src\states\GameMenu.cpp" />
+    <ClCompile Include="src\states\GameOver.cpp" />
+    <ClCompile Include="src\states\Pause.cpp" />
+    <ClCompile Include="src\states\Settings.cpp" />
+    <ClCompile Include="src\utils\DebugInfo.cpp" />
+    <ClCompile Include="src\utils\Score.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\entities\Player.hpp" />
+    <ClInclude Include="src\entities\Upgrade.hpp" />
+    <ClInclude Include="src\graphics\Layer.hpp" />
+    <ClInclude Include="src\graphics\Layers.hpp" />
+    <ClInclude Include="src\gui\ProgressBar.hpp" />
+    <ClInclude Include="src\gui\SetOrigin.hpp" />
+    <ClInclude Include="src\gui\Widget.hpp" />
+    <ClInclude Include="src\states\GuiFactoryElements.hpp" />
+    <ClInclude Include="src\Application.hpp" />
+    <ClInclude Include="src\Assets.hpp" />
+    <ClInclude Include="src\audio\AudioManager.hpp" />
+    <ClInclude Include="src\EngineInitializer.hpp" />
+    <ClInclude Include="src\entities\Bullet.hpp" />
+    <ClInclude Include="src\entities\components\AnimationComponent.hpp" />
+    <ClInclude Include="src\entities\components\Components.hpp" />
+    <ClInclude Include="src\entities\components\ControlComponent.hpp" />
+    <ClInclude Include="src\entities\components\EffectComponent.hpp" />
+    <ClInclude Include="src\entities\components\ShootingComponent.hpp" />
+    <ClInclude Include="src\entities\Effect.hpp" />
+    <ClInclude Include="src\entities\SpaceShip.hpp" />
+    <ClInclude Include="src\entities\EntityInfo.hpp" />
+    <ClInclude Include="src\entities\components\IComponent.hpp" />
+    <ClInclude Include="src\entities\components\MovementComponent.hpp" />
+    <ClInclude Include="src\entities\Entity.hpp" />
+    <ClInclude Include="src\entities\EntitySystem.hpp" />
+    <ClInclude Include="src\entities\IEntity.hpp" />
+    <ClInclude Include="src\State.hpp" />
+    <ClInclude Include="src\gui\Button.hpp" />
+    <ClInclude Include="src\gui\Slider.hpp" />
+    <ClInclude Include="src\system\Events.hpp" />
+    <ClInclude Include="src\system\Input.hpp" />
+    <ClInclude Include="src\states\GuiFactory.hpp" />
+    <ClInclude Include="src\system\Window.hpp" />
+    <ClInclude Include="src\utils\Config.hpp" />
+    <ClInclude Include="src\utils\DebugInfo.hpp" />
+    <ClInclude Include="src\utils\Log.hpp" />
+    <ClInclude Include="src\utils\Random.hpp" />
+    <ClInclude Include="src\states\Game.hpp" />
+    <ClInclude Include="src\states\GameMenu.hpp" />
+    <ClInclude Include="src\states\GameOver.hpp" />
+    <ClInclude Include="src\states\Pause.hpp" />
+    <ClInclude Include="src\states\Settings.hpp" />
+    <ClInclude Include="src\utils\Score.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="blur.frag" />
+    <None Include="config.ini" />
+    <None Include="resources\entities.json" />
+    <None Include="resources\resources.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\SpaceShooter.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{63E7734D-B997-4289-839C-010CA5BA9E1E}</ProjectGuid>
+    <RootNamespace>SpaceShooter</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>true</VcpkgEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>E:\!Projects\!Additional Depencies\fparser-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions />
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>E:\!Projects\!Additional Depencies\fparser-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FP_SUPPORT_FLOAT_TYPE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>/NODEFAULTLIB:MSVCRT;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>E:\!Projects\!Additional Depencies\fparser-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions />
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>E:\!Projects\!Additional Depencies\fparser-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FP_SUPPORT_FLOAT_TYPE;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

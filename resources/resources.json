@@ -1,0 +1,70 @@
+{
+  "textures": [
+    [ "Logo", "logo.png" ],
+    [ "Player", "player/player.png" ],
+    [ "PlayerThrust", "player/thrust.png" ],
+    [ "PlayerFlare", "player/flare.png" ],
+    [ "SpikeyEnemy", "enemies/spikeyenemy.png" ],
+    [ "BladeEnemy", "enemies/bladeenemy.png" ],
+    [ "BugEnemy", "enemies/bugenemy.png" ],
+    [ "FighterEnemy", "enemies/fighterenemy.png" ],
+    [ "PlayerLaser", "bullets/playerlaser.png" ],
+    [ "PlayerRocket", "bullets/playerrocket.png" ],
+    [ "EnemyLaser", "bullets/enemylaser.png" ],
+    [ "EnemyBullet", "bullets/enemybullet.png" ],
+    [ "Background_1", "background/background_1.png" ],
+    [ "Background_2", "background/background_2.png" ],
+    [ "Background_3", "background/background_3.png" ],
+    [ "Background_4", "background/background_1.png" ],
+    [ "Background_5", "background/background_5.png" ],
+    [ "Explosion_1", "explosions/explosion_1.png" ],
+    [ "Explosion_2", "explosions/explosion_2.png" ],
+    [ "Explosion_3", "explosions/explosion_3.png" ],
+    [ "Heal", "upgrades/heal.png" ],
+    [ "Bomb", "upgrades/bomb.png"]
+  ],
+  "sounds": [
+    [ "GameStart", "Start.ogg"],
+    [ "Explosion_1", "Explosion_1.ogg"],
+    [ "Explosion_2", "Explosion_2.ogg"],
+    [ "Explosion_3", "Explosion_3.ogg"],
+    [ "Explosion_4", "Explosion_4.ogg"],
+    [ "Laser_1", "Laser_1.ogg"],
+    [ "Laser_2", "Laser_2.ogg"],
+    [ "PlayerFire", "PlayerFire.ogg"],
+    [ "LaserRicochet", "LaserRicochet.ogg"],
+    [ "JetLoop", "JetLoop.ogg"],
+    [ "PlayerRocket", "PlayerRocket.ogg"],
+    [ "Upgrade", "Upgrade.ogg" ]
+  ],
+  "musics": [
+    [ "MenuMusic", "MenuMusic.ogg" ],
+    [ "GameMusic", "GameMusic.ogg" ]
+  ],
+  "fonts": [
+    [ "ArialBlack", "ArialBlack.ttf" ]
+  ],
+  "strings": [
+    "gui.button.settings=Settings",
+    "gui.button.leftToMenu=Left to Menu",
+    "gui.button.save=Save",
+    "gui.button.apply=Apply",
+    "gui.button.cancel=Cancel",
+    "gui.button.resume=Resume",
+    "gui.button.exit=Exit",
+    "gui.button.verticalSync=Vertical Sync",
+    "gui.button.disabled=Disabled",
+    "gui.button.enabled=Enabled",
+    "gui.slider.masterVolume=Master Volume",
+    "gui.slider.effectVolume=Effect Volume",
+    "gui.slider.musicVolume=Music Volume",
+    "gui.string.pause=Pause",
+    "gui.slider.fps=FPS",
+    "gui.string.tapToBegin=TAP TO BEGIN",
+    "gui.string.score=Score",
+    "gui.string.gameOver=Game Over",
+    "gui.string.highScore=High Score",
+    "gui.string.tapToRestart=TAP TO RESTART",
+    "gui.string.gameSettings=Game Settings"
+  ]
+}
