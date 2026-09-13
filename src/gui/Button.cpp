@@ -13,15 +13,15 @@
 
 Button::Button(Assets* assets, const std::function<void()>& callback) :
 	m_callback(callback),
-	m_p_text(new sf::Text("I'm a button", *assets->getFont("ArialBlack")))
+	m_p_text(new sf::Text(*assets->getFont("ArialBlack"), "I'm a button"))
 {
-	float windowAspectRatio = Window::getAspectRatio();
+	const sf::Vector2f windowAspectRatio(Window::getAspectRatio(), Window::getAspectRatio());
 	m_p_shape->setFillColor(IDLE_COLOR);
 	m_p_shape->setOutlineColor(sf::Color::Red);
 	m_p_shape->setOutlineThickness(5.f);
-	m_p_shape->setScale(windowAspectRatio, windowAspectRatio);
+	m_p_shape->setScale(windowAspectRatio);
 	m_p_text->setFillColor(sf::Color::Yellow);
-	m_p_text->setScale(windowAspectRatio, windowAspectRatio);
+	m_p_text->setScale(windowAspectRatio);
 	setOrigin(Origin::CENTER);
 }
 
@@ -32,7 +32,7 @@ Button::~Button() {
 void Button::input(const sf::Vector2f& cursorPos) {
 	Widget::input(cursorPos);
 	if (m_lastState == State::HOVER) {
-		if (Input::jclicked(sf::Mouse::Left)) {
+		if (Input::jclicked(sf::Mouse::Button::Left)) {
 			m_currentState = State::PRESSED;
 		}
 	}
@@ -61,12 +61,12 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Button::setOrigin(Origin origin) {
 	Widget::setOrigin(origin);
-	m_p_text->setOrigin(sf::Vector2f(m_p_text->getLocalBounds().width / 2.f, m_p_text->getLocalBounds().height / 2.f) - m_p_shape->getSize() / 2.f + m_p_shape->getOrigin());
+	m_p_text->setOrigin(m_p_text->getLocalBounds().size / 2.f - m_p_shape->getSize() / 2.f + m_p_shape->getOrigin());
 }
 
 void Button::setString(const sf::String& string) {
 	m_p_text->setString(string);
-	m_p_text->setOrigin(sf::Vector2f(m_p_text->getLocalBounds().width / 2.f, m_p_text->getLocalBounds().height / 2.f) - m_p_shape->getSize() / 2.f + m_p_shape->getOrigin());
+	m_p_text->setOrigin(m_p_text->getLocalBounds().size / 2.f - m_p_shape->getSize() / 2.f + m_p_shape->getOrigin());
 }
 
 void Button::setPosition(const sf::Vector2f& position) {

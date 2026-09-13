@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <string>
 
+const std::string TEXTURE_FAIL("texture_fail");
+
 namespace sf {
 	class Texture;
 	class Font;

@@ -19,12 +19,12 @@ GameMenu::GameMenu(Application& application) : GuiFactory(application),
 	GET_WINDOW_SIZE_AND_ASPECTRATIO
 	m_p_tapToBegin = addText(m_p_assets->getString("gui.string.tapToBegin"), sf::Vector2f(windowSize.x / 2.f, windowSize.y * 65.f / 100.f),
 			sf::Color(255, 255, 153, 255), 50U);
-	m_p_tapToBegin->setRotation(6.f);
+	m_p_tapToBegin->setRotation(sf::degrees(6.f));
 	addButton(m_p_assets->getString("gui.button.settings"), sf::Vector2f(Window::getSize().x / 2.f, Window::getSize().y * 5.f / 100.f),
 			  WIDGET_SIZE_NARROW, [&app = application]() { app.pushState<Settings>(); });
-	m_p_logo->setScale(Window::getAspectRatio(), Window::getAspectRatio());
-	m_p_logo->setOrigin(m_p_logo->getLocalBounds().width / 2.f, m_p_logo->getLocalBounds().height / 2.f);
-	m_p_logo->setPosition(windowSize.x / 2, windowSize.y * 30.f / 100.f);
+	m_p_logo->setScale(aspectRatio);
+	m_p_logo->setOrigin(m_p_logo->getLocalBounds().size / 2.f);
+	m_p_logo->setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y * 30.f / 100.f));
 }
 
 GameMenu::~GameMenu() {
@@ -35,7 +35,7 @@ GameMenu::~GameMenu() {
 
 void GameMenu::input() {
 	GuiFactory::input();
-	if (Input::jclicked(sf::Mouse::Left)) {
+	if (Input::jclicked(sf::Mouse::Button::Left)) {
 		for (const auto& it : m_widgets) {
 			if (it->getState() == Widget::State::PRESSED)
 				return;

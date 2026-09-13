@@ -38,7 +38,6 @@ Application::Application() :
 
 Application::~Application() {
 	Window::finalize();
-	Events::finalize();
 	Input::finalize();
 	AudioManager::finalize();
 	while (!m_states.empty()) {
@@ -53,7 +52,6 @@ bool Application::initialize() {
 		return 0;
 	}
 	Window::initialize();
-	Events::initialize();
 	Input::initialize();
 	AudioManager::initialize(m_p_assets);
 #ifdef _DEBUG

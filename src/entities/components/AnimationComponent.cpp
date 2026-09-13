@@ -9,11 +9,10 @@ AnimationComponent::AnimationComponent(sf::Sprite* sprite, AnimationData* animat
 	m_frameOffset(0),
 	m_cycle(0),
 	m_lastFrame(0),
-	m_width(sprite->getTextureRect().width / animationData->m_columns),
-	m_height(sprite->getTextureRect().height / animationData->m_rows)
+	m_size(sprite->getTextureRect().size.componentWiseDiv(sf::Vector2i(animationData->m_columns, animationData->m_rows)))
 {
-	m_p_sprite->setTextureRect(sf::IntRect(0, 0, m_width, m_height));
-	m_p_sprite->setOrigin(m_width / 2.f, m_height / 2.f);
+	m_p_sprite->setTextureRect(sf::IntRect(sf::Vector2i(0, 0), m_size));
+	m_p_sprite->setOrigin(sf::Vector2f(m_size / 2));
 }
 
 void AnimationComponent::update(const float dt) {
@@ -27,5 +26,5 @@ void AnimationComponent::update(const float dt) {
 	int currentColumn = static_cast<int>(m_currentFrame + m_frameOffset) % m_p_animationData->m_columns;
 	int currentRow = static_cast<int>((m_currentFrame + m_frameOffset) / m_p_animationData->m_columns);
 
-	m_p_sprite->setTextureRect(sf::IntRect(m_width * currentColumn, m_height * currentRow, m_width,	m_height));
+	m_p_sprite->setTextureRect(sf::IntRect(sf::Vector2i(m_size.x * currentColumn, m_size.y * currentRow), m_size));
 }

@@ -7,12 +7,6 @@
 #include <math.h>
 #include <SFML/Graphics/Sprite.hpp>
 
-void normalize(sf::Vector2f& vector) {
-	float w = static_cast<float>(sqrt(vector.x * vector.x + vector.y * vector.y));
-	vector.x /= w;
-	vector.y /= w;
-}
-
 MovementComponent::MovementComponent(MovementData& movementData, EntitySystem* entitySystem, Entity* entity) : IComponent(),
 	m_movementData(movementData),
 	m_p_entitySystem(entitySystem),
@@ -24,23 +18,24 @@ MovementComponent::MovementComponent(MovementData& movementData, EntitySystem* e
 	if (m_movementData.m_aimEnemy) {
 		aimEnemy();
 	}
-	normalize(m_movementData.m_direction);
+	m_movementData.m_direction = m_movementData.m_direction.normalized();
 	entity->setRotation(static_cast<float>(atan2(-m_movementData.m_direction.x, m_movementData.m_direction.y) * 180.f / M_PI));
 }
 
 void MovementComponent::update(const float dt) {
 	m_elapsed += dt;
-	if (m_movementData.m_functionData[0].m_p_function.GetParseErrorType() == FunctionParser::ParseErrorType::FP_NO_ERROR) {
+	if (m_movementData.parser[0].has_value()) {
 		runFunction(dt, 0, m_offset.x);
 	}
-	if (m_movementData.m_functionData[1].m_p_function.GetParseErrorType() == FunctionParser::ParseErrorType::FP_NO_ERROR) {
+	if (m_movementData.parser[1].has_value()) {
 		runFunction(dt, 1, m_offset.y);
 	}
+
 	if (m_movementData.m_followEnemy) aimEnemy();
 	m_currentSpeed += m_movementData.m_accelerationSpeed * dt * *m_p_scale;
 	if (m_currentSpeed > m_movementData.m_maxSpeed) m_currentSpeed = m_movementData.m_maxSpeed;
-	m_p_entity->move(m_currentSpeed * m_movementData.m_direction.x * dt * *m_p_scale,
-					 m_currentSpeed * m_movementData.m_direction.y * dt * *m_p_scale);
+	m_p_entity->move(sf::Vector2f(m_currentSpeed * m_movementData.m_direction.x * dt * *m_p_scale,
+					 m_currentSpeed * m_movementData.m_direction.y * dt * *m_p_scale));
 }
 
 void MovementComponent::aimEnemy() {
@@ -51,19 +46,24 @@ void MovementComponent::aimEnemy() {
 	if (distance > 1) {
 		m_movementData.m_direction.x = (target.x - position.x) / distance;
 		m_movementData.m_direction.y = (target.y - position.y) / distance;
-		normalize(m_movementData.m_direction);
 	}
-	normalize(m_movementData.m_direction);
+	m_movementData.m_direction = m_movementData.m_direction.normalized();
 	m_p_entity->setRotation(static_cast<float>(atan2(-m_movementData.m_direction.x, m_movementData.m_direction.y) * 180.f / M_PI));
 }
 
 void MovementComponent::runFunction(const float dt,  size_t index, float& variable) {
 	sf::Vector2f pos(m_p_entity->getPosition() - m_offset);
-	float newElements[4] = { pos.x, pos.y, m_elapsed, dt };
-	FunctionData* functionData = &m_movementData.m_functionData[index];
-	std::copy(std::begin(newElements), std::end(newElements), std::back_inserter(functionData->m_functionVariables));
-	size_t variablesSize = functionData->m_functionVariables.size();
-	variable = functionData->m_p_function.Eval(functionData->m_functionVariables.data());
-	m_p_entity->setPosition(sf::Vector2f(pos + m_offset));
-	if (variablesSize >= 4) functionData->m_functionVariables.resize(variablesSize - 4);
+	mu::Parser& parser = m_movementData.parser[index].value();
+	parser.DefineConst("posX", pos.x);
+	parser.DefineConst("posY", pos.y);
+	parser.DefineConst("elapsed", m_elapsed);
+	parser.DefineConst("dt", dt);
+
+	try {
+		variable = parser.Eval();
+		m_p_entity->setPosition(sf::Vector2f(pos + m_offset));
+	}
+	catch (mu::Parser::exception_type& e) {
+		std::cout << e.GetMsg() << std::endl;
+	}
 }

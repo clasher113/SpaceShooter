@@ -13,8 +13,8 @@ GuiFactory::GuiFactory(Application& application) : State(application),
 {
 	float windowAspectRatio = Window::getAspectRatio();
 	sf::Vector2u windowSize = Window::getSize();
-	m_p_background->setScale(windowAspectRatio, windowAspectRatio);
-	m_p_background->setOrigin(sf::Vector2f(m_p_background->getLocalBounds().width / 2, m_p_background->getLocalBounds().height / 2));
+	m_p_background->setScale(sf::Vector2f(windowAspectRatio, windowAspectRatio));
+	m_p_background->setOrigin(sf::Vector2f(m_p_background->getLocalBounds().size / 2.f));
 	m_p_background->setPosition(sf::Vector2f(windowSize.x / 2.f, windowSize.y / 2.f));
 }
 
@@ -67,10 +67,10 @@ Slider* GuiFactory::addSlider(const sf::String& string, const sf::Vector2f& posi
 }
 
 sf::Text* GuiFactory::addText(const sf::String& string, const sf::Vector2f& position, const sf::Color& color, unsigned int fontSize, Origin origin) {
-	sf::Text* text = static_cast<sf::Text*>(m_drawable.emplace_back(new sf::Text(string, *m_p_assets->getFont("ArialBlack"), fontSize)));
+	sf::Text* text = static_cast<sf::Text*>(m_drawable.emplace_back(new sf::Text(*m_p_assets->getFont("ArialBlack"), string, fontSize)));
 	text->setPosition(position);
 	text->setFillColor(color);
-	text->setScale(Window::getAspectRatio(), Window::getAspectRatio());
+	text->setScale(sf::Vector2f(Window::getAspectRatio(), Window::getAspectRatio()));
 	SetOrigin::setOrigin(*text, text->getLocalBounds(), origin);
 	return text;
 }

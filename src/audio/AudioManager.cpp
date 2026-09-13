@@ -34,7 +34,7 @@ sf::Sound* AudioManager::playSound(const char* soundName, bool loop) {
 	if (soundBuffer == nullptr) return nullptr;
 	sf::Sound* sound = new sf::Sound(*soundBuffer);
 	sound->setVolume(*s_m_p_soundVolume);
-	sound->setLoop(loop);
+	sound->setLooping(loop);
 	sound->play();
 	s_m_sources.insert(sound);
 	return sound;
@@ -44,7 +44,7 @@ sf::Music* AudioManager::playMusic(const char* musicName, bool loop) {
 	sf::Music* music = s_m_p_assets->getMusic(musicName);
 	if (music == nullptr) return nullptr;
 	music->setVolume(*s_m_p_musicVolume);
-	music->setLoop(loop);
+	music->setLooping(loop);
 	music->play();
 	s_m_sources.insert(music);
 	return music;

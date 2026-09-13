@@ -21,7 +21,9 @@ ShootingComponent::~ShootingComponent() {
 }
 
 void ShootingComponent::input() {
-	if (m_p_shootingData->m_shootingMode == ShootingMode::MANUAL) m_fire = Input::pressed(m_p_shootingData->m_key);
+	if (m_p_shootingData->m_shootingMode == ShootingMode::MANUAL) {
+		m_fire = Input::pressed(static_cast<sf::Keyboard::Key>(m_p_shootingData->m_key));
+	}
 }
 
 void ShootingComponent::update(const float dt) {

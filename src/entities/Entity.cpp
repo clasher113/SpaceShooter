@@ -17,12 +17,12 @@ Entity::Entity(Assets* assets, const std::string& name, float x, float y, Entity
 	m_isDead(false),
 	m_scale(Window::getAspectRatio() * ENTITIES_SCALE),
 	m_p_entityInfo(EntityInfo::getEntity(name)),
-	m_p_sprite(new sf::Sprite())
+	m_p_sprite(new sf::Sprite(assets->getTexture(TEXTURE_FAIL)))
 {
-	m_p_sprite->setTexture(assets->getTexture(m_p_entityInfo->textureName));
-	m_p_sprite->setOrigin(m_p_sprite->getTextureRect().width / 2.f, m_p_sprite->getTextureRect().height / 2.f);
-	m_p_sprite->setPosition(x, y);
-	m_p_sprite->setScale(m_scale, m_scale);
+	m_p_sprite->setTexture(assets->getTexture(m_p_entityInfo->textureName), true);
+	m_p_sprite->setOrigin(sf::Vector2f(m_p_sprite->getTextureRect().size.componentWiseDiv(sf::Vector2i(2, 2))));
+	m_p_sprite->setPosition(sf::Vector2f(x, y));
+	m_p_sprite->setScale(sf::Vector2f(m_scale, m_scale));
 	if (m_p_entityInfo->movementData != nullptr) {
 		addComponent(new MovementComponent(*m_p_entityInfo->movementData, entitySystem, this));
 	}
@@ -108,11 +108,11 @@ void Entity::setPosition(sf::Vector2f position) {
 }
 
 void Entity::setRotation(float angle) {
-	m_p_sprite->setRotation(angle);
+	m_p_sprite->setRotation(sf::degrees(angle));
 }
 
-void Entity::move(float offsetX, float offsetY) {
-	m_p_sprite->move(offsetX, offsetY);
+void Entity::move(const sf::Vector2f& offset) {
+	m_p_sprite->move(offset);
 }
 
 sf::FloatRect Entity::getHitbox() const {

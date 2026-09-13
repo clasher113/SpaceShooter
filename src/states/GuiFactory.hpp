@@ -1,16 +1,16 @@
 #ifndef GUI_FACTORY_HPP
 #define GUI_FACTORY_HPP
 
-#define GET_WINDOW_SIZE sf::Vector2f windowSize(Window::getSize());
-#define GET_WINDOW_ASPECTRATIO float aspectRatio = Window::getAspectRatio();
+#define GET_WINDOW_SIZE const sf::Vector2f windowSize(Window::getSize());
+#define GET_WINDOW_ASPECTRATIO const sf::Vector2f aspectRatio(Window::getAspectRatio(), Window::getAspectRatio());
 #define GET_WINDOW_SIZE_AND_ASPECTRATIO GET_WINDOW_SIZE GET_WINDOW_ASPECTRATIO
-#define WIDGET_SIZE_WIDE sf::Vector2f((windowSize.x * 82.f / 100.f) / aspectRatio, 55.f)
-#define WIDGET_SIZE_NARROW sf::Vector2f((windowSize.x * 40.f / 100.f) / aspectRatio, 55.f)
+#define WIDGET_SIZE_WIDE sf::Vector2f((windowSize.x * 82.f / 100.f) / aspectRatio.x, 55.f)
+#define WIDGET_SIZE_NARROW sf::Vector2f((windowSize.x * 40.f / 100.f) / aspectRatio.x, 55.f)
 #define COLON std::string(": ")
 #define INTERVAL 15.f
 #define DISTANCE 10.f
-#define BELOW_THAN(WIDGET) WIDGET->getPosition().y + ((WIDGET->getLocalBounds().height * aspectRatio) + DISTANCE * aspectRatio)
-#define ABOVE_THAN(WIDGET) WIDGET->getPosition().y - ((WIDGET->getLocalBounds().height * aspectRatio) + DISTANCE * aspectRatio)
+#define BELOW_THAN(WIDGET) WIDGET->getPosition().y + ((WIDGET->getLocalBounds().size.y * aspectRatio.x) + DISTANCE * aspectRatio.x)
+#define ABOVE_THAN(WIDGET) WIDGET->getPosition().y - ((WIDGET->getLocalBounds().size.y * aspectRatio.x) + DISTANCE * aspectRatio.x)
 
 #include "../State.hpp"
 #include "../gui/SetOrigin.hpp"

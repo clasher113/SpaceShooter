@@ -1,5 +1,5 @@
 # SpaceShooter
-Depencies: STL 20, [SFML 2.5.1](https://www.sfml-dev.org/download/sfml/2.5.1/), [RapidJSON](https://github.com/Tencent/rapidjson/), [fparser](https://github.com/thliebig/fparser)
+Depencies: STL 20, [SFML 3.0.2](https://github.com/SFML/SFML/tree/3.0.x), [RapidJSON](https://github.com/Tencent/rapidjson/), [muparser](https://github.com/beltoforion/muparser)
 
 Controls:\
 	Moving: Arrows ← → ↑ ↓ or WSAD\

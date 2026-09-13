@@ -9,7 +9,7 @@ uint* Input::_frames = nullptr;
 uint Input::_current = 0;
 
 void Input::initialize() {
-	unsigned int keyCount = sf::Keyboard::KeyCount + sf::Mouse::ButtonCount;
+	unsigned int keyCount = sf::Keyboard::KeyCount+ sf::Mouse::ButtonCount;
 	_keys = new bool[keyCount];
 	_frames = new uint[keyCount];
 	memset(_keys, false, keyCount * sizeof(*_keys));
@@ -21,34 +21,34 @@ void Input::finalize() {
 	delete[] _frames;
 }
 
-bool Input::pressed(int keycode) {
-	if (keycode < 0 || keycode >= sf::Keyboard::KeyCount)
+bool Input::pressed(const sf::Keyboard::Key keycode) {
+	if (keycode == sf::Keyboard::Key::Unknown || static_cast<unsigned int>(keycode) >= sf::Keyboard::KeyCount)
 		return false;
-	return _keys[keycode];
+	return _keys[static_cast<unsigned int>(keycode)];
 }
 
-bool Input::jpressed(int keycode) {
-	if (keycode < 0 || keycode >= sf::Keyboard::KeyCount)
+bool Input::jpressed(const sf::Keyboard::Key keycode) {
+	if (keycode == sf::Keyboard::Key::Unknown || static_cast<unsigned int>(keycode) >= sf::Keyboard::KeyCount)
 		return false;
-	return _keys[keycode] && _frames[keycode] == _current;
+	return _keys[static_cast<unsigned int>(keycode)] && _frames[static_cast<unsigned int>(keycode)] == _current;
 }
 
-bool Input::unpressed(int keycode) {
-	if (keycode < 0 || keycode >= sf::Keyboard::KeyCount)
+bool Input::unpressed(const sf::Keyboard::Key keycode) {
+	if (keycode == sf::Keyboard::Key::Unknown || static_cast<unsigned int>(keycode) >= sf::Keyboard::KeyCount)
 		return false;
-	return !_keys[keycode] && _frames[keycode] == _current;
+	return !_keys[static_cast<unsigned int>(keycode)] && _frames[static_cast<unsigned int>(keycode)] == _current;
 }
 
-bool Input::clicked(int button) {
-	return _keys[sf::Keyboard::KeyCount + button];
+bool Input::clicked(const sf::Mouse::Button button) {
+	return _keys[sf::Keyboard::KeyCount + static_cast<unsigned int>(button)];
 }
 
-bool Input::jclicked(int button) {
-	button += sf::Keyboard::KeyCount;
-	return _keys[button] && _frames[button] == _current;
+bool Input::jclicked(const sf::Mouse::Button button) {
+	const unsigned int index = static_cast<unsigned int>(button) + sf::Keyboard::KeyCount;
+	return _keys[index] && _frames[index] == _current;
 }
 
-bool Input::unclicked(int button) {
-	button += sf::Keyboard::KeyCount;
-	return !_keys[button] && _frames[button] == _current;
+bool Input::unclicked(const sf::Mouse::Button button) {
+	const unsigned int index = static_cast<unsigned int>(button) + sf::Keyboard::KeyCount;
+	return !_keys[index] && _frames[index] == _current;
 }

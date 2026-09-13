@@ -5,16 +5,16 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Image.hpp>
 
 Assets::Assets() {
-	sf::Image image;
-	image.create(64, 64, sf::Color(228, 0, 255));
+	sf::Image image(sf::Vector2u(64, 64), sf::Color(228, 0, 255));
 	sf::Texture* texture_fail = new sf::Texture();
 	texture_fail->loadFromImage(image);
-	image.create(32, 32, sf::Color::Black);
-	texture_fail->update(image.getPixelsPtr(), 32, 32, 32, 0);
-	texture_fail->update(image.getPixelsPtr(), 32, 32, 0, 32);
-	store("texture_fail", texture_fail);
+	image.resize(sf::Vector2u(32, 32), sf::Color::Black);
+	texture_fail->update(image, sf::Vector2u(32, 0));
+	texture_fail->update(image, sf::Vector2u(0, 32));
+	store(TEXTURE_FAIL, texture_fail);
 }
 
 Assets::~Assets() {
@@ -31,7 +31,7 @@ const sf::Texture& Assets::getTexture(const std::string& name) const {
 		return *it->second;
 	}
 	ERR("Can't find texture: \"" << name << "\"");
-	return *m_textures.at("texture_fail");
+	return *m_textures.at(TEXTURE_FAIL);
 }
 
 void Assets::store(const std::string& name, sf::Texture* texture) {

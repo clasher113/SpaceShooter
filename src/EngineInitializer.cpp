@@ -18,15 +18,48 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Audio/Music.hpp>
-#include <fparser_mpfr.hh>
+#include <muParser.h>
+#include <type_traits>
+
+static std::vector<std::string> splitString(const std::string& str, char delimiter) {
+	std::vector<std::string> tokens;
+	std::string token;
+	std::stringstream ss(str);
+
+	while (std::getline(ss, token, delimiter)) {
+		tokens.push_back(token);
+	}
+	return tokens;
+}
+
+static std::string trim(const std::string& str) {
+	const std::string whitespace = " \t\n\r\f\v";
+
+	size_t start = str.find_first_not_of(whitespace);
+	if (start == std::string::npos) {
+		return "";
+	}
+
+	size_t end = str.find_last_not_of(whitespace);
+	return str.substr(start, end - start + 1);
+}
 
 template<typename T_RES>
 void loadResource(Assets* assets, const std::string& name, const std::string& path) {
 	T_RES* resource = new T_RES();
-	if (!resource->loadFromFile(path)) {
-		delete resource;
-		return;
+	if constexpr (std::is_same_v<T_RES, sf::Font>) {
+		if (!resource->openFromFile(path)) {
+			delete resource;
+			return;
+		}
 	}
+	else {
+		if (!resource->loadFromFile(path)) {
+			delete resource;
+			return;
+		}
+	}
+
 	assets->store(name, resource);
 	INFO("Resource \"" << name << "\" with type \"" << typeid(T_RES).name() << "\" loaded");
 }
@@ -106,33 +139,39 @@ void movementComponent(const rapidjson::Value& currentEntity, MovementData*& mov
 	getMember(currentMovementData, "maxSpeed", movementData->m_maxSpeed);
 	getMember(currentMovementData, "accelerationSpeed", movementData->m_accelerationSpeed);
 	const auto& functionIt = currentMovementData.FindMember("function");
+
+	size_t index = 0;
 	if (functionIt != currentMovementData.MemberEnd()) {
-		size_t it = 0;
 		for (const auto& currentFunction : functionIt->value.GetArray()) {
-			FunctionData* functionData = &movementData->m_functionData[it++];
-			std::string expression, variables, variables_parsed;
+			std::string expression, variables;
 			getMember(currentFunction, "expression", expression);
-			getMember(currentFunction, "variables", variables_parsed);
-			if (expression.empty() || variables_parsed.empty()) continue;
-			std::vector<std::string> tokens;
-			std::istringstream iss(variables_parsed);
-			std::string s;
-			while (getline(iss, s, ',')) {
-				tokens.emplace_back(s);
+			if (expression.empty()) continue;
+
+			getMember(currentFunction, "variables", variables);
+			const std::vector<std::string> tokens = splitString(variables, ',');
+			if (tokens.empty()) continue;
+
+			mu::Parser parser;
+			parser.SetExpr(expression);
+			for (const std::string& variable : tokens) {
+				const std::vector<std::string> parts = splitString(variable, '=');
+				if (parts.size() != 2) continue;
+
+				const std::string varName = trim(parts[0]);
+				const std::string varValue = trim(parts[1]);
+				float value = 0.f;
+
+				try {
+					value = std::stof(varValue);
+				}
+				catch (const std::exception&) {
+					continue;
+				}
+
+				parser.DefineConst(varName, value);
 			}
-			for (const auto& it : tokens) {
-				size_t pos = it.find('=');
-				variables.append(it.substr(0, pos) + std::string(","));
-				functionData->m_functionVariables.emplace_back(static_cast<float>(atof(it.substr(pos + 1, it.size()).data())));
-			}
-			functionData->m_p_function.Parse(expression, variables + " posX, posY, elapsed, dt");
-			const char* errmsg = functionData->m_p_function.ErrorMsg();
-			if (strlen(errmsg) > 0) {
-				ERR(expression << ": " << errmsg);
-				continue;
-			}
-			functionData->m_p_function.Optimize();
-			if (it == 2) break;
+			movementData->parser[index] = parser;
+			index++;
 		}
 	}
 	const auto& direction = currentMovementData.FindMember("direction");

@@ -2,9 +2,7 @@
 #include "AnimationComponent.hpp"
 #include "../Entity.hpp"
 #include "../../system/Window.hpp"
-
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Window/Keyboard.hpp>
+#include "../../system/Input.hpp"
 
 ControlComponent::ControlComponent(Entity* entity, sf::Vector2f maxSpeed, sf::Vector2f accelerationSpeed) :
 	m_left(false),
@@ -24,10 +22,10 @@ ControlComponent::~ControlComponent() {
 }
 
 void ControlComponent::input() {
-	m_left = sf::Keyboard().isKeyPressed(sf::Keyboard::Left) || sf::Keyboard().isKeyPressed(sf::Keyboard::A);
-	m_right = sf::Keyboard().isKeyPressed(sf::Keyboard::Right) || sf::Keyboard().isKeyPressed(sf::Keyboard::D);
-	m_forward = sf::Keyboard().isKeyPressed(sf::Keyboard::Up) || sf::Keyboard().isKeyPressed(sf::Keyboard::W);
-	m_back = sf::Keyboard().isKeyPressed(sf::Keyboard::Down) || sf::Keyboard().isKeyPressed(sf::Keyboard::S);
+	m_left = Input::pressed(sf::Keyboard::Key::Left) || Input::pressed(sf::Keyboard::Key::A);
+	m_right = Input::pressed(sf::Keyboard::Key::Right) || Input::pressed(sf::Keyboard::Key::D);
+	m_forward = Input::pressed(sf::Keyboard::Key::Up) || Input::pressed(sf::Keyboard::Key::W);
+	m_back = Input::pressed(sf::Keyboard::Key::Down) || Input::pressed(sf::Keyboard::Key::S);
 }
 
 void ControlComponent::update(const float dt) {
@@ -84,7 +82,7 @@ void ControlComponent::update(const float dt) {
 	}
 	sf::Vector2u windowSize = Window::getSize();
 	sf::Vector2f pos = m_p_entity->getPosition() + sf::Vector2f(m_dx, m_dy) * dt;
-	sf::Vector2f halfSize = sf::Vector2f(m_p_entity->getHitbox().width / 2.f, m_p_entity->getHitbox().height / 2.f);
+	sf::Vector2f halfSize = m_p_entity->getHitbox().size / 2.f;
 	if (pos.x >= windowSize.x - halfSize.x) pos.x = windowSize.x - halfSize.x;
 	if (pos.x <= halfSize.x) pos.x = halfSize.x;
 	if (pos.y <= windowSize.y / 2.f + halfSize.y) pos.y = windowSize.y / 2.f + halfSize.y;

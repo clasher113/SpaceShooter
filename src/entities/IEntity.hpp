@@ -11,6 +11,7 @@ class EntityInfo;
 namespace sf {
 	class RenderWindow;
 	class Sprite;
+	class Vector;
 }
 enum class EntityType;
 
@@ -28,7 +29,7 @@ public:
 	virtual void setRotation(float angle) = 0;
 	virtual void giveDamage(int damage) = 0;
 	virtual void giveHitPoints(int hitPoints) = 0;
-	virtual void move(float offsetX, float offsetY) = 0;
+	virtual void move(const sf::Vector2f& offset) = 0;
 	virtual void kill() = 0;
 
 	virtual bool isDead() const = 0;

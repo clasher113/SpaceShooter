@@ -18,16 +18,16 @@ float Window::s_m_aspectRatio = 1.f;
 
 void Window::initialize() {
 	const char* TITLE = "Space Shooter";
-	s_m_p_window = new sf::RenderWindow(sf::VideoMode(Config::getParameter<unsigned int>(Config::ParameterId::WINDOW_WIDTH),
-													  Config::getParameter<unsigned int>(Config::ParameterId::WINDOW_HEIGHT)), TITLE, sf::Style::Close);
+	s_m_p_window = new sf::RenderWindow(sf::VideoMode(sf::Vector2u(Config::getParameter<unsigned int>(Config::ParameterId::WINDOW_WIDTH),
+													  Config::getParameter<unsigned int>(Config::ParameterId::WINDOW_HEIGHT))), TITLE, sf::Style::Close);
 	s_m_p_window->setFramerateLimit(Config::getParameter<unsigned int>(Config::ParameterId::FPS_LIMIT));
 	s_m_p_window->setVerticalSyncEnabled(Config::getParameter<bool>(Config::ParameterId::VERTICAL_SYNC));
 	s_m_p_window->setKeyRepeatEnabled(false);
-	//sf::View view(s_m_p_window->getView().getCenter(), s_m_p_window->getView().getSize() * 2.f);
+	//sf::View view(s_m_p_window->getView().getCenter(), s_m_p_window->getView().getSize() * 1.3f);
 	//s_m_p_window->setView(view);
 	HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
 	if (hIcon) {
-		SendMessage(s_m_p_window->getSystemHandle(), WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+		SendMessage(s_m_p_window->getNativeHandle(), WM_SETICON, ICON_BIG, (LPARAM)hIcon);
 	}
 	s_m_aspectRatio = s_m_p_window->getSize().x / 1024.f;
 #ifdef _DEBUG

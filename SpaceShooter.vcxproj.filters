@@ -177,12 +177,6 @@
     <ClCompile Include="src\entities\Upgrade.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\!Additional Depencies\fparser-master\fpoptimizer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\!Additional Depencies\fparser-master\fparser.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\states\Game.hpp">
@@ -314,14 +308,11 @@
     <ClInclude Include="src\entities\Upgrade.hpp">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.ini">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="blur.frag">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="resources\resources.json">
       <Filter>Resource Files</Filter>
     </None>

@@ -6,47 +6,40 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-sf::Event* Events::s_m_p_event = nullptr;
-
-void Events::initialize() {
-	s_m_p_event = new sf::Event;
-}
-
-void Events::finalize() {
-	delete s_m_p_event;
-}
-
 void Events::pollEvents(sf::RenderWindow& window) {
 	Input::_current++;
 	if (Input::_current >= UINT_MAX) Input::_current = 0;
-	sf::Event& e = *s_m_p_event;
-	while (window.pollEvent(e)) {
-		if (e.type == sf::Event::Closed)
-			window.close();
 
-		if (e.type == sf::Event::KeyPressed) {
-			if (e.key.code == sf::Keyboard::Unknown) {
+	while (auto event = window.pollEvent()) {
+		if (event->getIf<sf::Event::Closed>()) {
+			window.close();
+			break;
+		}
+		else if (const sf::Event::KeyPressed* key = event->getIf<sf::Event::KeyPressed>()) {
+			if (key->code == sf::Keyboard::Key::Unknown) {
 				ERR("Unknown keyboard button pressed!")
 			}
 			else {
-				Input::_keys[e.key.code] = true;
-				Input::_frames[e.key.code] = Input::_current;
+				Input::_keys[static_cast<unsigned int>(key->code)] = true;
+				Input::_frames[static_cast<unsigned int>(key->code)] = Input::_current;
 			}
 		}
-		else if (e.type == sf::Event::KeyReleased && e.key.code != sf::Keyboard::Unknown) {
-			Input::_keys[e.key.code] = false;
-			Input::_frames[e.key.code] = Input::_current;
+		else if (const sf::Event::KeyReleased* key = event->getIf<sf::Event::KeyReleased>()) {
+			if (key->code != sf::Keyboard::Key::Unknown) {
+				Input::_keys[static_cast<unsigned int>(key->code)] = false;
+				Input::_frames[static_cast<unsigned int>(key->code)] = Input::_current;
+			}
 		}
-		if (e.type == sf::Event::MouseButtonPressed) {
-			Input::_keys[sf::Keyboard::KeyCount + e.mouseButton.button] = true;
-			Input::_frames[sf::Keyboard::KeyCount + e.mouseButton.button] = Input::_current;
+		else if (const sf::Event::MouseButtonPressed* button = event->getIf<sf::Event::MouseButtonPressed>()) {
+			Input::_keys[sf::Keyboard::KeyCount + static_cast<int>(button->button)] = true;
+			Input::_frames[sf::Keyboard::KeyCount + static_cast<int>(button->button)] = Input::_current;
 		}
-		else if (e.type == sf::Event::MouseButtonReleased) {
-			Input::_keys[sf::Keyboard::KeyCount + e.mouseButton.button] = false;
-			Input::_frames[sf::Keyboard::KeyCount + e.mouseButton.button] = Input::_current;
+		else if (const sf::Event::MouseButtonReleased* button = event->getIf<sf::Event::MouseButtonReleased>()) {
+			Input::_keys[sf::Keyboard::KeyCount + static_cast<int>(button->button)] = false;
+			Input::_frames[sf::Keyboard::KeyCount + static_cast<int>(button->button)] = Input::_current;
 		}
 	}
-	if (Input::jpressed(sf::Keyboard::Escape)) window.close();
+	if (Input::jpressed(sf::Keyboard::Key::Escape)) window.close();
 }
 
 const long long Events::getTime() {

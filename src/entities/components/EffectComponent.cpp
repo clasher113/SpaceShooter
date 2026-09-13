@@ -61,7 +61,7 @@ void EffectComponent::processEffect(EffectState effectState, int index) {
 					m_p_entity->getPosition().y + current->second->m_positionOffset.y * scale);
 				m_p_lastEffect->setLoop(current->second->m_loopAnimation);
 				if (current->second->m_pinToParent) {
-					m_p_lastEffect->pinTo(m_p_entity->getPosition());
+					m_p_lastEffect->pinTo(m_p_entity);
 					m_p_lastEffect->setOffset(current->second->m_positionOffset * scale);
 				}
 				current->second->lastEffect = m_p_lastEffect;

@@ -9,7 +9,7 @@
 Effect::Effect(Assets* assets, const std::string& name, float x, float y, EntitySystem* entitySystem) : Entity(assets, name, x, y, entitySystem),
 	m_p_effectInfo(static_cast<EffectInfo*>(m_p_entityInfo)),
 	m_loopAnimation(false),
-	m_p_position(nullptr)
+	m_p_pinToEntity(nullptr)
 {
 }
 
@@ -23,13 +23,13 @@ void Effect::update(const float dt) {
 		if (animation != nullptr && animation->getCycle() >= 1)
 			m_isDead = true;
 	}
-	if (m_p_position != nullptr) {
-		m_p_sprite->setPosition(*m_p_position + m_offset);
+	if (m_p_pinToEntity != nullptr) {
+		m_p_sprite->setPosition(m_p_pinToEntity->getPosition() + m_offset);
 	}
 }
 
-void Effect::pinTo(const sf::Vector2f& position) {
-	m_p_position = const_cast<sf::Vector2f*>(&position);
+void Effect::pinTo(const IEntity* const entity) {
+	m_p_pinToEntity = entity;
 }
 
 void Effect::setOffset(const sf::Vector2f& offset) {

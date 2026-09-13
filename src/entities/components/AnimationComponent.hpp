@@ -3,6 +3,8 @@
 
 #include "IComponent.hpp"
 
+#include <SFML/System/Vector2.hpp>
+
 namespace sf {
 	class Sprite;
 }
@@ -29,8 +31,8 @@ private:
 	float m_currentFrame;
 	int m_lastFrame;
 	float m_frameOffset;
-	int m_width, m_height;
 	unsigned int m_cycle;
+	sf::Vector2i m_size;
 
 	AnimationData* m_p_animationData;
 	sf::Sprite* m_p_sprite;

@@ -19,7 +19,7 @@ Widget::~Widget() {
 
 void Widget::input(const sf::Vector2f& cursorPos) {
 	if (m_p_shape->getGlobalBounds().contains(cursorPos)) {
-		if (!Input::clicked(sf::Mouse::Left))
+		if (!Input::clicked(sf::Mouse::Button::Left))
 			m_currentState = State::HOVER;
 	}
 }

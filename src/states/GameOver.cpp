@@ -23,7 +23,7 @@ GameOver::GameOver(Application& application) : GuiFactory(application),
 			sf::Color(255, 255, 255, 255), 70U);
 	m_p_tapToRestart = addText(m_p_assets->getString("gui.string.tapToRestart"), sf::Vector2f(windowSize.x / 2.f, windowSize.y * 65.f / 100.f),
 			sf::Color(255, 255, 153, 255), 50U);
-	m_p_tapToRestart->setRotation(6.f);
+	m_p_tapToRestart->setRotation(sf::degrees(6.f));
 	addText(m_p_assets->getString("gui.string.score") + std::string(": ") + std::to_string(score.score), sf::Vector2f(windowSize.x * 25.f / 100.f, windowSize.y * 50.f / 100.f),
 			sf::Color(255, 255, 255, 255), 55U, Origin::LEFT_CENTER);
 	addText(m_p_assets->getString("gui.string.highScore") + std::string(": ") + std::to_string(score.hightScore), sf::Vector2f(windowSize.x * 25.f / 100.f, windowSize.y * 55.f / 100.f),
@@ -34,9 +34,9 @@ GameOver::GameOver(Application& application) : GuiFactory(application),
 			  WIDGET_SIZE_NARROW, [&app = *m_p_application]() { app.changeState<GameMenu>(); });
 	addButton(m_p_assets->getString("gui.button.exit"), sf::Vector2f(windowSize.x * 71.f / 100.f, ABOVE_THAN(widget)),
 			  WIDGET_SIZE_NARROW, []() {Window::close(); });
-	m_p_logo->setScale(aspectRatio, aspectRatio);
-	m_p_logo->setOrigin(m_p_logo->getLocalBounds().width / 2.f, m_p_logo->getLocalBounds().height / 2.f);
-	m_p_logo->setPosition(windowSize.x / 2, windowSize.y * 30.f / 100.f);
+	m_p_logo->setScale(aspectRatio);
+	m_p_logo->setOrigin(m_p_logo->getLocalBounds().size / 2.f);
+	m_p_logo->setPosition(sf::Vector2f(windowSize.x / 2, windowSize.y * 30.f / 100.f));
 }
 
 GameOver::~GameOver() {
@@ -46,7 +46,7 @@ GameOver::~GameOver() {
 
 void GameOver::input() {
 	GuiFactory::input();
-	if (Input::jclicked(sf::Mouse::Left)) {
+	if (Input::jclicked(sf::Mouse::Button::Left)) {
 		for (const auto& it : m_widgets) {
 			if (it->getState() == Widget::State::PRESSED)
 				return;

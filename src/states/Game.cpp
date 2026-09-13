@@ -23,7 +23,7 @@
 Game::Game(Application& application) : State(application),
 	m_p_entitySystem(new EntitySystem(m_p_assets)),
 	m_p_sceneMusic(AudioManager::playMusic("GameMusic", true)),
-	m_p_scoreText(new sf::Text(m_p_assets->getString("gui.string.score") + std::string(": 0"), *m_p_assets->getFont("ArialBlack"), 40U))
+	m_p_scoreText(new sf::Text(*m_p_assets->getFont("ArialBlack"), m_p_assets->getString("gui.string.score") + std::string(": 0"), 40U))
 {
 	m_p_player = m_p_entitySystem->spawn<Player>("Player", Window::getSize().x / 2.f, Window::getSize().y * 85.f / 100.f);
 	m_p_player->addComponent(new ControlComponent(m_p_player, sf::Vector2f(500.f, 500.f), sf::Vector2f(1200.f, 1200.f)));
@@ -43,16 +43,16 @@ Game::Game(Application& application) : State(application),
 	m_background.emplace_back(new sf::Sprite(m_p_assets->getTexture("Background_5")));
 
 	sf::Vector2f windowSize(Window::getSize());
-	float aspectRatio = Window::getAspectRatio();
+	const sf::Vector2f aspectRatio(Window::getAspectRatio(), Window::getAspectRatio());
 	for (const auto& it : m_background) {
-		it->setOrigin(it->getGlobalBounds().width / 2.f, it->getGlobalBounds().height);
-		it->setScale(aspectRatio, aspectRatio);
-		it->setPosition(windowSize.x / 2.f, windowSize.y);
-		windowSize.y -= it->getGlobalBounds().height;
+		it->setOrigin(sf::Vector2f(it->getGlobalBounds().size.x / 2.f, it->getGlobalBounds().size.y));
+		it->setScale(aspectRatio);
+		it->setPosition(sf::Vector2f(windowSize.x / 2.f, windowSize.y));
+		windowSize.y -= it->getGlobalBounds().size.y;
 	}
 	windowSize = sf::Vector2f(Window::getSize());
 
-	m_p_scoreText->setScale(aspectRatio, aspectRatio);
+	m_p_scoreText->setScale(aspectRatio);
 	m_p_scoreText->setPosition(sf::Vector2f(windowSize.x * 99.f / 100.f, windowSize.x * 1.f / 100.f));
 
 	Upgrade::initialize(m_p_entitySystem, m_p_player);
@@ -69,25 +69,25 @@ Game::~Game() {
 		delete it;
 	}
 	AudioManager::setStatus(Status::STOP);
-#ifndef _DEBUG
-	Window::getWindow().setMouseCursorVisible(true);
-#endif // _DEBUG
 }
 
 void Game::input() {
 	m_p_player->input();
 	m_p_entitySystem->input();
-	if (Input::jpressed(sf::Keyboard::Enter)) {
+	if (Input::jpressed(sf::Keyboard::Key::Enter)) {
 		m_p_application->pushState<Pause>(true);
 	}
 #ifdef _DEBUG
-	if (Input::jpressed(sf::Keyboard::BackSpace)) {
+	if (Input::jpressed(sf::Keyboard::Key::Backspace)) {
 		m_p_player->kill();
 	}
 #endif // _DEBUG
 }
 
 void Game::update(const float dt) {
+	if (Input::jpressed(sf::Keyboard::Key::LShift)) {
+		m_p_player->kill();
+	}
 	m_p_entitySystem->update(m_p_player, dt);
 
 	if (m_p_player->isDead()) {
@@ -104,9 +104,9 @@ void Game::update(const float dt) {
 
 	sf::Sprite* lastSprite = m_background.back();
 	for (const auto& it : m_background) {
-		it->move(0, 50.f * dt * Window::getAspectRatio());
-		if (lastSprite != nullptr && it->getGlobalBounds().top >= Window::getSize().y)
-			it->setPosition(it->getPosition().x, lastSprite->getGlobalBounds().top);
+		it->move(sf::Vector2f(0, 50.f * dt * Window::getAspectRatio()));
+		if (lastSprite != nullptr && it->getGlobalBounds().position.y >= Window::getSize().y)
+			it->setPosition(sf::Vector2f(it->getPosition().x, lastSprite->getGlobalBounds().position.y));
 		lastSprite = it;
 	}
 }

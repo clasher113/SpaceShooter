@@ -72,7 +72,7 @@ void EntitySystem::update(Player* player, const float dt) {
 		for (const auto& playerBullet : m_entities) {
 			if (typeid(*it) != typeid(SpaceShip)) break;
 			if (it == playerBullet || typeid(*playerBullet) != typeid(Bullet) || playerBullet->getType() != EntityType::PLAYER) continue;
-			if (!it->isDead() && !playerBullet->isDead() && playerBullet->getHitbox().intersects(it->getHitbox())) {
+			if (!it->isDead() && !playerBullet->isDead() && playerBullet->getHitbox().findIntersection(it->getHitbox()).has_value()) {
 				it->giveDamage(playerBullet->getDamage());
 				playerBullet->kill();
 				if (it->isDead()) player->onEnemyKilled(static_cast<SpaceShipInfo*>(it->getInfo()));
@@ -81,14 +81,16 @@ void EntitySystem::update(Player* player, const float dt) {
 		if (player->isDead()) continue;
 		// player with enemy & enemy bullets
 		if (!it->isDead() && (it->getType() == EntityType::ENEMY || it->getType() == EntityType::UPGRADE) && 
-			player->getHitbox().intersects(it->getHitbox())) {
+			player->getHitbox().findIntersection(it->getHitbox()).has_value())
+		{
 			if (it->getType() == EntityType::ENEMY) player->giveDamage(it->getDamage());
 			it->kill();
 		}
 		// any entity with window
 		sf::FloatRect entityBounds = it->getGlobalBounds();
-		sf::FloatRect windowBounds = sf::FloatRect(m_windowBounds.left - entityBounds.width, m_windowBounds.top - entityBounds.height,
-			m_windowBounds.width + entityBounds.width * 2.f, m_windowBounds.height + entityBounds.height * 2.f);
+		sf::FloatRect windowBounds = sf::FloatRect(m_windowBounds.position - entityBounds.size, 
+			m_windowBounds.size + entityBounds.size
+		);
 		if (!it->isDead() && !windowBounds.contains(it->getPosition())) {
 			if (typeid(*it) == typeid(SpaceShip)) player->onEnemyLost(static_cast<SpaceShipInfo*>(it->getInfo()));
 			remove(it);

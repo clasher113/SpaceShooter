@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <algorithm>
 
 #define ANIMATION_SPEED 95.f
 
@@ -15,14 +16,14 @@ ProgressBar::ProgressBar(const unsigned int& value, int max, float width, float 
 	m_p_border(new sf::RectangleShape(sf::Vector2f(width, height))),
 	m_p_level(new sf::RectangleShape(sf::Vector2f(width / max * value, height)))
 {
-	float aspectRatio = Window::getAspectRatio();
+	sf::Vector2f aspectRatio(Window::getAspectRatio(), Window::getAspectRatio());
 	m_p_border->setFillColor(sf::Color::Transparent);
 	m_p_border->setOutlineColor(sf::Color::White);
 	m_p_border->setOutlineThickness(3.f);
-	m_p_border->setScale(aspectRatio, aspectRatio);
+	m_p_border->setScale(aspectRatio);
 	SetOrigin::setOrigin(*m_p_border, m_p_border->getLocalBounds(), Origin::CENTER);
 	m_p_level->setFillColor(sf::Color::Red);
-	m_p_level->setScale(aspectRatio, aspectRatio);
+	m_p_level->setScale(aspectRatio);
 	SetOrigin::setOrigin(*m_p_level, m_p_border->getLocalBounds(), Origin::CENTER);
 }
 

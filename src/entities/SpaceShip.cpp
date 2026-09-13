@@ -16,7 +16,7 @@ SpaceShip::SpaceShip(Assets* assets, const std::string& name, float x, float y, 
 	m_currentHealth(static_cast<SpaceShipInfo*>(m_p_entityInfo)->maxHealth),
 	m_p_healthBar(nullptr)
 {
-	float width = m_p_sprite->getLocalBounds().width * ENTITIES_SCALE;
+	float width = m_p_sprite->getLocalBounds().size.x * ENTITIES_SCALE;
 	m_p_healthBar = new ProgressBar(m_currentHealth, m_p_spaceShipInfo->maxHealth, width, 10.f);
 }
 
@@ -27,7 +27,7 @@ SpaceShip::~SpaceShip() {
 void SpaceShip::update(const float dt) {
 	Entity::update(dt);
 	sf::Vector2f position = m_p_sprite->getPosition();
-	m_p_healthBar->setPosition(sf::Vector2f(position.x, position.y - m_p_sprite->getGlobalBounds().height / 1.5f));
+	m_p_healthBar->setPosition(sf::Vector2f(position.x, position.y - m_p_sprite->getGlobalBounds().size.y / 1.5f));
 	m_p_healthBar->update(dt);
 }
 

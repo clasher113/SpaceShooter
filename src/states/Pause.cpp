@@ -13,17 +13,16 @@
 
 Pause::Pause(Application& application) : GuiFactory(application),
 	m_p_shader(new sf::Shader()),
-	m_p_texture(new sf::Texture()),
-	m_p_sprite(new sf::Sprite())
+	m_p_texture(new sf::Texture(Window::getSize())),
+	m_p_sprite(new sf::Sprite(*m_p_texture))
 {
 	GET_WINDOW_SIZE_AND_ASPECTRATIO
 	AudioManager::setStatus(Status::PAUSE, ApplyTo::SOUNDS);
 	m_p_shader->loadFromFile("blur.frag", sf::Shader::Type::Fragment);
 	m_p_shader->setUniform("blur_radius", 0.003f);
-	m_p_texture->create(static_cast<unsigned int>(windowSize.x), static_cast<unsigned int>(windowSize.y));
 	m_p_texture->update(Window::getWindow());
 	m_p_sprite->setTexture(*m_p_texture);
-	m_p_background->setScale(0.f, 0.f);
+	m_p_background->setScale(sf::Vector2f(0.f, 0.f));
 	addText(m_p_assets->getString("gui.string.pause"), sf::Vector2f(windowSize.x / 2.f, windowSize.y / 2.f),
 								  sf::Color::White, 50U);
 	Widget* widget = nullptr;
@@ -45,14 +44,11 @@ Pause::~Pause() {
 	delete m_p_texture;
 	delete m_p_sprite;
 	AudioManager::setStatus(Status::RESUME, ApplyTo::SOUNDS);
-#ifndef _DEBUG
-	Window::getWindow().setMouseCursorVisible(false);
-#endif // !_DEBUG
 }
 
 void Pause::input() {
 	GuiFactory::input();
-	if (Input::jpressed(sf::Keyboard::Enter)) {
+	if (Input::jpressed(sf::Keyboard::Key::Enter)) {
 		m_p_application->popState(true);
 	}
 }

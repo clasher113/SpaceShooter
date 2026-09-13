@@ -42,7 +42,7 @@ public:
 	void setRotation(float angle) override;
 	void giveDamage(int damage) override {};
 	void giveHitPoints(int hitPoints) override {};
-	void move(float offsetX, float offsetY) override;
+	void move(const sf::Vector2f& offset) override;
 	void kill() override {};
 
 	bool isDead() const override { return m_isDead; };

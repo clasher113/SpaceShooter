@@ -21,12 +21,12 @@ public:
 
 	void update(const float dt) override;
 
-	void pinTo(const sf::Vector2f& position);
+	void pinTo(const IEntity* entity);
 	void setOffset(const sf::Vector2f& offset);
 	void setLoop(bool loop);
 private:
 	bool m_loopAnimation;
-	sf::Vector2f* m_p_position;
+	const IEntity* m_p_pinToEntity;
 	sf::Vector2f m_offset;
 
 	EffectInfo* m_p_effectInfo;
